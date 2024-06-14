@@ -1,0 +1,96 @@
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+
+const Foodlist = (props) => {
+
+  console.log(`props(=searchWord) is ${props.area}`);
+  const searchWord = props.area; 
+
+  const [allData, setData] = useState(null);
+  const [SeoulData, setSeoulData] = useState([]);
+
+  let url = "https://seoul.openapi.redtable.global/api/food/img?serviceKey=PSafw88jNtQzTwgyVbphiirQHchBOt21iOAMBIMSdrWcQT338ouMWbzU5Q13mU1b";
+
+  useEffect(() => { // 버튼 click없이 자동으로 실행
+    // async를 사용하는 다른 함수 선언
+   const fetchData = async () => {
+    const response = await axios.get(url);
+      console.log('조회된 전체 데이터');
+      console.log(response.data.body);
+
+      // 전체 데이터 - 내림차순 정렬
+      const allData=response.data.body
+      .sort((a,b) => a.MENU_ID > b.MENU_ID ? -1 : a.MENU_ID > b.MENU_ID ? 1 : 0) // 내림차순 정렬
+      .map(
+          (item)=>{
+              return(
+                  // list item일 때 key props 넣어야 함. 없으면 warning 나옴
+                  <tr key={item.MENU_ID} className="stripe">
+                    <td>{item.RSTR_NM}</td>
+                    <td>{item.AREA_NM}</td>
+                    <td><img className="card-img-top people-img" src={item.FOOD_IMG_URL} alt="음식" /></td>
+                  </tr>
+              );
+          }
+      )
+      setData(allData);
+
+      // filter() test
+      const test=response.data.body
+      .filter(
+        (item) => item.AREA_NM.toString().toLowerCase().includes(searchWord.toString().toLowerCase()))
+      console.log(`filter() testing ... searchWord is ${searchWord}`); 
+      console.log(`*** Testing ***${searchWord} 데이터[오름차순 정렬] : `, test);  
+
+      // 지역 데이터 - 오름차순 정렬
+      const SeoulData=response.data.body
+        .filter(
+          (item) => item.AREA_NM.toString().toLowerCase().includes(searchWord.toString().toLowerCase()))
+        .sort((a,b) => a.MENU_ID < b.MENU_ID ? -1 : a.MENU_ID > b.MENU_ID ? 1 : 0) // 오름차순 정렬
+        .map(
+          (item)=>{
+            return(
+                // list item일 때 key props 넣어야 함. 없으면 warning 나옴
+                // 가격에 comma 넣기 // replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')
+                <tr key={item.MENU_ID} className="stripe">
+                  <td className='name'>{item.RSTR_NM}</td>
+                  <td className='area'>{item.AREA_NM}</td>
+                  <td className='food'><img className="card-img-top food-img" src={item.FOOD_IMG_URL} alt="음식" /></td>
+                </tr>
+            );
+          }
+        )
+      setSeoulData(SeoulData);
+    };
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[searchWord])
+
+  // 데이터 체크 (마지막으로)
+  console.log("전체 데이터[내림차순 정렬] : ", allData);
+  console.log(`${searchWord} 데이터[오름차순 정렬] : `, SeoulData);
+  /*
+      <h2>JSON 데이터 보기</h2>
+      {SeoulData && <textarea rows={7} value={JSON.stringify(SeoulData, null, 2)} readOnly={true}/>}
+  */
+  return (
+    <div>
+      <div className='table-display'>
+          <table className="table-striped">
+          <thead>
+            <tr>
+              <th>식당 이름</th>
+              <th>지역</th>
+              <th>음식</th>
+            </tr>
+          </thead>
+          <tbody>
+            {SeoulData}   
+          </tbody>
+        </table> 
+      </div>
+    </div>
+  )
+}
+
+export default Foodlist;
