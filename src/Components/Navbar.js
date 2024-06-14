@@ -39,7 +39,7 @@ const Navbar = () => {
               </form>
           </div>
       </nav>
-      <header className="bg-white py-5">
+      <header className="bg-white">
           <div className="container px-4 px-lg-5">
               <div className="text-center text-white">
                 <li className="imgList">
