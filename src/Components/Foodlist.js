@@ -50,13 +50,12 @@ const Foodlist = (props) => {
         .map(
           (item)=>{
             return(
-                // list item일 때 key props 넣어야 함. 없으면 warning 나옴
-                // 가격에 comma 넣기 // replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')
-                <tr key={item.MENU_ID} className="stripe">
-                  <td className='name'>{item.RSTR_NM}</td>
-                  <td className='area'>{item.AREA_NM}</td>
-                  <td className='food'><img className="card-img-top food-img" src={item.FOOD_IMG_URL} alt="음식" /></td>
-                </tr>
+              <div class="card border-success mb-3">
+                <div class="card-header">{item.RSTR_NM}</div>
+                <div class="card-body">
+                  <img className="card-img-top food-img" src={item.FOOD_IMG_URL} alt="음식" />
+                </div>
+              </div>
             );
           }
         )
@@ -75,19 +74,8 @@ const Foodlist = (props) => {
   */
   return (
     <div>
-      <div className='table-display'>
-          <table className="table-striped">
-          <thead>
-            <tr>
-              <th>식당 이름</th>
-              <th>지역</th>
-              <th>음식</th>
-            </tr>
-          </thead>
-          <tbody>
-            {SeoulData}   
-          </tbody>
-        </table> 
+      <div className='card-all'>
+        {SeoulData}   
       </div>
     </div>
   )

@@ -122,3 +122,26 @@ header {
   padding-top: 3rem !important;
   padding-bottom: 0.8rem !important;
 }
+
+.card-all {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: fit-content;
+  margin-left: 35px;
+  margin-right: 35px;
+}
+
+.card {
+  width: 150px;
+  margin-left: 10px;
+  margin-right: 10px;
+  --bs-card-spacer-y: 0.2rem;
+  --bs-card-spacer-x: 0.2rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: center;
+  background-color: rgba(206, 247, 180, 0.03);
+}
