@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-const Foodlist = (props) => {
+const Foodlist0 = (props) => {
 
   console.log(`props(=searchWord) is ${props.area}`);
   const searchWord = props.area; 
 
   const [allData, setData] = useState(null);
-  const [filterData, setfilterData] = useState([]);
-  const [SeoulData, setSeoulData] = useState([]);
 
   let url = "https://seoul.openapi.redtable.global/api/food/img?serviceKey=PSafw88jNtQzTwgyVbphiirQHchBOt21iOAMBIMSdrWcQT338ouMWbzU5Q13mU1b";
 
@@ -37,31 +35,8 @@ const Foodlist = (props) => {
       setData(allData);
 
       // filter() test
-      const filterData=response.data.body
-      .filter(
-        (item) => item.AREA_NM.toString().toLowerCase().includes(searchWord.toString().toLowerCase()))
-      console.log(`filter() testing ... searchWord is ${searchWord}`); 
-      console.log(`*** Testing ***${searchWord} 데이터[오름차순 정렬] : `, filterData);  
-      setfilterData(filterData);
-
       // 지역 데이터 - 오름차순 정렬
-      const SeoulData=response.data.body
-        .filter(
-          (item) => item.AREA_NM.toString().toLowerCase().includes(searchWord.toString().toLowerCase()))
-        .sort((a,b) => a.MENU_ID < b.MENU_ID ? -1 : a.MENU_ID > b.MENU_ID ? 1 : 0) // 오름차순 정렬
-        .map(
-          (item)=>{
-            return(
-              <div class="card border-success mb-3">
-                <div class="card-header">{item.RSTR_NM}</div>
-                <div class="card-body">
-                  <img className="card-img-top food-img" src={item.FOOD_IMG_URL} alt="음식" />
-                </div>
-              </div>
-            );
-          }
-        )
-      setSeoulData(SeoulData);
+
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,17 +44,15 @@ const Foodlist = (props) => {
 
   // 데이터 체크 (마지막으로)
   console.log("전체 데이터[내림차순 정렬] : ", allData);
-  console.log(`${searchWord} 데이터[오름차순 정렬] : `, SeoulData);
   return (
     <div>
-      {/* <h2>JSON 데이터 보기</h2> */}
-        {/* {filterData && <textarea rows={20} cols={100} value={JSON.stringify(filterData, null, 2)} readOnly={true}/>} */}
-
+      <h2>JSON 데이터 보기</h2>
+        {allData && <textarea rows={20} cols={100} value={JSON.stringify(allData, null, 2)} readOnly={true}/>}
       <div className='card-all'>
-        {SeoulData}   
+        {/* {allData}    */}
       </div>
     </div>
   )
 }
 
-export default Foodlist;
+export default Foodlist0;
