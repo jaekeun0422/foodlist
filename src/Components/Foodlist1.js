@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-const Foodlist = (props) => {
+const Foodlist1 = (props) => {
 
   console.log(`props(=searchWord) is ${props.area}`);
   const searchWord = props.area; 
@@ -54,4 +54,4 @@ const Foodlist = (props) => {
   )
 }
 
-export default Foodlist;
+export default Foodlist1;

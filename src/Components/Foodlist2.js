@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-const Foodlist = (props) => {
+const Foodlist2 = (props) => {
 
   console.log(`props(=searchWord) is ${props.area}`);
   const searchWord = props.area; 
@@ -56,10 +56,10 @@ const Foodlist = (props) => {
       <h2>JSON 데이터 보기</h2>
         {filterData && <textarea rows={20} cols={100} value={JSON.stringify(filterData, null, 2)} readOnly={true}/>}
       <div className='card-all'>
-        {/* {allData}    */}
+        {/* {filterData}    */}
       </div>
     </div>
   )
 }
 
-export default Foodlist;
+export default Foodlist2;
